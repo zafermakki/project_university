@@ -1,0 +1,54 @@
+.animatedText{
+    animation: colorChange 4s infinite, moveUpDown 5s infinite;
+}
+
+@keyframes colorChange {
+    0% {
+      color: #4b78ab; /* Red */
+    }
+    25% {
+      color: #908feb; /* Green */
+    }
+    50% {
+      color: #0000ff; /* Blue */
+    }
+    75% {
+      color: #241889; /* Yellow */
+    }
+    100% {
+      color: #4b78ab; /* Back to Red */
+    }
+  }
+  @keyframes moveUpDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); } /* Adjust this value to control the vertical movement */
+  }
+
+.animatedTextw span {
+    opacity: 0;
+    display: inline-block;
+    animation: fadeIn 2s infinite;
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+}
+
+.animatedTextw span {
+    opacity: 0;
+    display: inline-block;
+    animation: fadeIn 2s forwards;
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+  .animatedTextw{
+    display: inline-block;
+    white-space: pre;
+    animation: none;
+  }

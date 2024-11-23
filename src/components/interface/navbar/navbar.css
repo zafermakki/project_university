@@ -1,0 +1,33 @@
+@keyframes moveAndRotate {
+    0% {
+      transform: translateX(0) rotate(0deg);
+    }
+    50% {
+      transform: translateX(-100px) rotate(-360deg); /* Move left and rotate */
+    }
+    100% {
+      transform: translateX(0) rotate(0deg); /* Return to original position */
+    }
+}
+  
+.iconAnimation1 {
+    display: inline-block;
+    animation: moveAndRotate 4s ease-in-out infinite; /* Animation repeats infinitely */
+}
+
+@keyframes moveAndRotate2 {
+    0% {
+      transform: translateX(0) rotate(0deg);
+    }
+    50% {
+      transform: translateX(100px) rotate(360deg); /* Move left and rotate */
+    }
+    100% {
+      transform: translateX(0) rotate(0deg); /* Return to original position */
+    }
+}
+  
+.iconAnimation2 {
+    display: inline-block;
+    animation: moveAndRotate2 4s ease-in-out infinite; /* Animation repeats infinitely */
+}
