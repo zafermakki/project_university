@@ -104,12 +104,7 @@
     padding: 10px;
     color: #2196f3;
 }
-.btn-create-account{
-    position: absolute;
-    left: 50%;
-    top: 54%;
-    transform: translate(-50%,-10%);
-}
+
 .p-login{
     text-align: center;
     color: #2196f3;

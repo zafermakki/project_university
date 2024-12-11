@@ -88,8 +88,8 @@ const Prodcuts = () => {
               left: 0,
               width: '100%', // عندما نمرر الماوس، نعرض الخط بالكامل
               height: '2px',
-              backgroundColor: 'blue',
-              transition: 'width 0.5s ease-in-out', // جعل تأثير الحركة يستغرق 0.5 ثانية عند المرور
+              backgroundColor: '#2196f3',
+              transition: 'width 0.3s ease-in-out', // جعل تأثير الحركة يستغرق 0.5 ثانية عند المرور
             },
             '&::after': {
               content: '""',
@@ -98,8 +98,8 @@ const Prodcuts = () => {
               left: 0,
               width: 0, // يبدأ العرض صفرًا عند عدم وجود المؤشر
               height: '2px',
-              backgroundColor: 'blue',
-              transition: 'width 0.5s ease-in-out', // تأخير 0.5 ثانية لإخفاء الخط بعد إزالة المؤشر
+              backgroundColor: '#2196f3',
+              transition: 'width 0.3s ease-in-out', // تأخير 0.5 ثانية لإخفاء الخط بعد إزالة المؤشر
             },
           }}
           onClick={() => {

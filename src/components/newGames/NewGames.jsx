@@ -47,7 +47,11 @@ const NewGames = () => {
             whiteSpace: 'normal', // Ensure text wraps to new lines
           }}
         >
-          <p>{item.description}</p>
+          <ul>
+            <li>{item.description}</li>
+            <li>Release Date:{item.release_date}</li>
+            <li>Game_Type:{item.game_type}</li>
+          </ul>
         </div>
         <div>
           <ReactPlayer
