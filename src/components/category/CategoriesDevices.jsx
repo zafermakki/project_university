@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
+import Swal from 'sweetalert2'
+
 
 const ImageContainer = styled('div')({
   width: '100%',
@@ -28,9 +30,11 @@ const StyledImg = styled('img')({
   borderRadius: '15px',
 });
 
+
+
 const CategoriesDevices = () => {
-  const [news, setNews] = useState([]);
   const navigate = useNavigate();
+  const [news, setNews] = useState([]);
 
   useEffect(() => {
     getData();
@@ -38,7 +42,12 @@ const CategoriesDevices = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/products/categories/');
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://127.0.0.1:8000/api/products/categories/',{
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      });
       setNews(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);

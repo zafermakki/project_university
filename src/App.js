@@ -12,7 +12,8 @@ import CategoriesDevices from "./components/category/CategoriesDevices";
 import SubCategories from "./components/subcategories/SubCategories";
 import Details from "./components/details/Details";
 import Purchases from "./components/purchases/Purchases";
-import Products from "./components/products/Prodcuts"
+import Products from "./components/products/Prodcuts";
+import VerifyEmail from "./components/verifyEmail/VerifyEmail";
 
 function App() {
   const [MyMOde, setmyMOde] = useState(
@@ -38,8 +39,12 @@ function App() {
       element: <Login />,
     },
     {
-      path: '/newaccount',
+      path: '/createaccount',
       element: <NewAccount/>
+    },
+    {
+      path: 'verify-email',
+      element: <VerifyEmail />   
     },
     {
       path: '/list',

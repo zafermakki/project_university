@@ -6,22 +6,32 @@ const ADD_TO_CART_URL = 'http://127.0.0.1:8000/api/cart/add/';
 // Function to fetch the user's cart
 const FETCH_USER_CART_URL = (userId) => `http://127.0.0.1:8000/api/cart/${userId}/`;
 
+const getToken = () => localStorage.getItem('token');
 // Async thunk for adding items to the cart
 export const addToCartAsync = createAsyncThunk(
   'cart/addToCartAsync',
   async (cartData, { rejectWithValue }) => {
     try {
+      console.log('🛒 Data being sent:', cartData); // ✅ تحقق من البيانات قبل الإرسال
+      
+      const token = getToken();
+      if (!token) throw new Error('No token found');
+
       const response = await axios.post(ADD_TO_CART_URL, cartData, {
         headers: {
           'Content-Type': 'application/json',
-        }
+          Authorization: `Token ${token}`,
+        },
       });
+
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      console.error('❌ Error response:', error.response?.data);
+      return rejectWithValue(error.response?.data || 'Unauthorized');
     }
   }
 );
+
 
 
 // Async thunk for fetching user's cart items
@@ -29,10 +39,17 @@ export const fetchUserCartAsync = createAsyncThunk(
   'cart/fetchUserCartAsync',
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(FETCH_USER_CART_URL(userId));
-      return response.data; // Assuming the response returns the cart items
+      const token = getToken();
+      if (!token) throw new Error('No token found');
+
+      const response = await axios.get(FETCH_USER_CART_URL(userId), {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data); // Reject with error message
+      return rejectWithValue(error.response?.data || 'Unauthorized');
     }
   }
 );

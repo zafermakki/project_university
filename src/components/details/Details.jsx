@@ -27,6 +27,12 @@ const Details = () => {
     const [sum, setSum] = useState(0);
 
     useEffect(() => {
+      const userId = localStorage.getItem('user_id');
+      console.log("User ID from localStorage:", userId);
+  }, []);
+  
+
+    useEffect(() => {
         const sumWithInitial = news.reduce(
           (accumulator, currentValue) => accumulator + currentValue.price * currentValue.quantity,
           0
@@ -53,7 +59,7 @@ const Details = () => {
         });
       } else {
         const cartData = {
-          customer: parseInt(userId),
+          customer: userId,
           products: [{
             id: item.id,
             quantity: 1 // Default quantity of 1

@@ -12,7 +12,12 @@ const NewGames = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/products/newgames/');
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://127.0.0.1:8000/api/products/newgames/',{
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      });
       setNewgames(response.data);
     } catch (error) {
       console.log('Error fetching data:' , error);

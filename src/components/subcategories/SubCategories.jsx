@@ -15,8 +15,13 @@ const SubCategories = () => {
 
   const getData = async () => {
     try {
+      const token = localStorage.getItem('token');
       // const response = await axios.get(`http://192.168.1.94:8000/api/products/${category_id}/`);
-      const response = await axios.get(`http://127.0.0.1:8000/api/products/subcategories/${category_id}/`);
+      const response = await axios.get(`http://127.0.0.1:8000/api/products/subcategories/${category_id}/`,{
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      });
       setNews(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);

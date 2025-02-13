@@ -17,13 +17,18 @@ const CartPage = () => {
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    const userId = parseInt(localStorage.getItem('user_id'), 10);
+    const userId = localStorage.getItem('user_id'); 
 
     
     // Fetch the cart data when the component mounts
     const fetchCartData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/cart/${userId}/`);
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://127.0.0.1:8000/api/cart/${userId}/`,{
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        });
         if (response.ok) {
           const data = await response.json();
           // Dispatch the data to Redux store
@@ -51,10 +56,12 @@ const CartPage = () => {
     const userId = localStorage.getItem('user_id');
 
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`http://127.0.0.1:8000/api/cart/update/${itemId}/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Token ${token}`
         },
         body: JSON.stringify({
           product_id: itemId,
@@ -116,10 +123,12 @@ const CartPage = () => {
     }));
   
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`http://127.0.0.1:8000/api/cart/complete-purchase/${userId}/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Token ${token}`
         },
         body: JSON.stringify({
           products: formattedCartItems,
@@ -210,8 +219,12 @@ const CartPage = () => {
     }
   
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`http://127.0.0.1:8000/api/cart/delete/${itemId}/`, {
         method: 'DELETE',
+        headers: {
+          Authorization: `Token ${token}`
+        }
       });
   
       if (response.ok) {

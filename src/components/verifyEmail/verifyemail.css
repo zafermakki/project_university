@@ -1,0 +1,26 @@
+.get-start-container-code {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 50%, #30003f, #220020);
+}
+  
+  
+.content-code {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%,-50%);
+    z-index: 1;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    margin-top: 0%;
+}
+.custom-swal-popup {
+    background-color: #30003f;
+    color: #fff;
+} 
+.custom-swal-popup {
+    box-shadow: 5px 5px 30px 1px #7b1fa2;
+}

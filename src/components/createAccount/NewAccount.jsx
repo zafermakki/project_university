@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Box, Typography  } from '@mui/material';
-import { UploadFile } from '@mui/icons-material';
+import { Button, Box, TextField  } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -9,90 +8,75 @@ import "./newacount.css";
 const NewAccount = () => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({
-    first_name: '',
-    last_name: '',
+  const [formData, setFormData] = useState({
     username: '',
     password: '',
-    email: '',
+    email: ''
   });
 
-  const [profileImage, setProfileImage] = useState(null);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const handleFileChange = (event) => {
-    setProfileImage(event.target.files[0]);
-  }; // إضافة حالة للصورة
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
-  const addUser = async () => {
-    if (user.password.length < 8) {
-      Swal.fire({
-        icon: "error",
-        title: "Password too short",
-        text: "Password must be at least 8 characters long",
-        customClass: {
-          container: 'custom-swal-container',
-          popup: 'custom-swal-popup',
-          header: 'custom-swal-header',
-          title: 'custom-swal-title',
-          content: 'custom-swal-content',
-          actions: 'custom-swal-actions',
-          confirmButton: 'custom-swal-confirm-button',
-        }
-      });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.username || !formData.password || !formData.email) {
+      setError('جميع الحقول مطلوبة');
+      setSuccess('');
       return;
     }
 
-    // إنشاء FormData لإرسال البيانات
-    const formData = new FormData();
-    formData.append('first_name', user.first_name);
-    formData.append('last_name', user.last_name);
-    formData.append('username', user.username);
-    formData.append('password', user.password);
-    formData.append('email', user.email);
-    if (profileImage) {
-      formData.append('profile_image', profileImage); // إضافة الصورة
+    if (formData.password.length < 8) {
+      setError('يجب ان تكون كلمة المرور 8 محارف او أكثر');
+      setSuccess('');
+      return;
     }
 
-    let url = 'http://127.0.0.1:8000/api/customers/add-user/';
-    let options = {
-      method: 'POST',
-      body: formData,
-    };
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/auth/client/register/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    let response = await fetch(url, options);
-    if (response.status === 201) {
-      Swal.fire({
-        position: "bottom-end",
-        icon: "success",
-        title: "Your account has been created",
-        showConfirmButton: false,
-        timer: 2500,
-        customClass: {
-          container: 'custom-swal-container',
-          popup: 'custom-swal-popup',
-          header: 'custom-swal-header',
-          title: 'custom-swal-title',
-          content: 'custom-swal-content',
-          actions: 'custom-swal-actions',
-          confirmButton: 'custom-swal-confirm-button',
-        }
-      });
-      navigate('/login');
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Username/Email already exists",
-        customClass: {
-          container: 'custom-swal-container',
-          popup: 'custom-swal-popup',
-          header: 'custom-swal-header',
-          title: 'custom-swal-title',
-          content: 'custom-swal-content',
-          actions: 'custom-swal-actions',
-          confirmButton: 'custom-swal-confirm-button',
-        }
-      });
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess(data.message);
+        setError('');
+        navigate('/verify-email',{ state: { email: formData.email}});
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "A confirmation code has been sent to your email address",
+          showConfirmButton: false,
+          timer: 4500,
+          customClass: {
+            container: 'custom-swal-container',
+            popup: 'custom-swal-popup',
+            header: 'custom-swal-header',
+            title: 'custom-swal-title',
+            content: 'custom-swal-content',
+            actions: 'custom-swal-actions',
+            confirmButton: 'custom-swal-confirm-button',
+          }
+        });
+      } else {
+        setError(data.message);
+        setSuccess('');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('حدث خطأ أثناء إنشاء الحساب.');
     }
   };
 
@@ -107,84 +91,46 @@ const NewAccount = () => {
         <div>
           <h2 className='text-createAccount'>Create Account</h2>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className='input-createAccount'>
-            <input 
+            <TextField
+              label="Username"
               type="text"
               name="username"
-              placeholder='username'
-              className='input-user'
-              onChange={(e) => {
-                setUser({ ...user, username: e.target.value })
-              }}
+              value={formData.username}
+              onChange={handleChange}
+              sx={{ margin: "15px", width: "400px" }}
             />
             <br />
-            <input 
+            <TextField
+              label="Password"
               type="password"
               name="password"
-              placeholder='password'
-              className='input'
-              value={user.password}
-              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              value={formData.password}
+              onChange={handleChange}
+              sx={{ margin: "15px", width: "400px" }}
             />
             <br />
-            <input 
+            <TextField
+              label="Email"
               type="email"
               name="email"
-              placeholder='email'
-              className='input'
-              value={user.email}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              value={formData.email}
+              onChange={handleChange}
+              sx={{ margin: "15px", width: "400px" }}
             />
             <br />
-            <input 
-              type="text"
-              name="first_name"
-              placeholder='first name'
-              className='input'
-              value={user.first_name}
-              onChange={(e) => setUser({ ...user, first_name: e.target.value })}
-            />
-            <br />
-            <input 
-              type="text"
-              name="last_name"
-              placeholder='last name'
-              className='input'
-              value={user.last_name}
-              onChange={(e) => setUser({ ...user, last_name: e.target.value })}
-            />
-            <br />
-            <Box textAlign="center" mt={0} mb={2}>
-                <input
-                  accept="image/*"
-                  style={{ display: 'none' }} // إخفاء الإدخال الافتراضي
-                  id="file-upload"
-                  type="file"
-                  onChange={handleFileChange}
-                />
-                <label htmlFor="file-upload">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    component="span"
-                    startIcon={<UploadFile />}
-                  >
-                    choose image 
-                  </Button>
-                </label>
-                {profileImage && (
-                  <Typography variant="body2" mt={2} sx={{maxWidth:"435px"}}>
-                      the file has been selected: {profileImage.name}
-                  </Typography>
-                )}
-            </Box>
-            <Button variant='contained' className='btn-create-account'
-              onClick={addUser}
+            <Button
+              variant='contained'
+              sx={{ backgroundColor: "#7b1fa2", color: "#fff" }}
+              className='btn-create-account'
+              type="submit"
             >
               Create Account
             </Button>
           </div>
+          {error && <Box sx={{ color: 'red', marginTop: '10px',textAlign:"center" }}>{error}</Box>}
+          {success && <Box sx={{ color: 'green', marginTop: '10px',textAlign:"center" }}>{success}</Box>}
         </form>
       </div>
     </div>

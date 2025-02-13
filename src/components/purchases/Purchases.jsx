@@ -54,9 +54,14 @@ const Purchases = () => {
 
   const getData = async () => {
     try {
+      const token = localStorage.getItem('token');
       const response = await axios.get(
         // `http://192.168.1.94:8000/api/sales/${customer_id}/`
-        `http://127.0.0.1:8000/api/cart/purchases/${customer_id}/`
+        `http://127.0.0.1:8000/api/cart/purchases/${customer_id}/`,{
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        }
       );
       console.log(response.data); 
       setNews(response.data);

@@ -38,8 +38,14 @@ const Prodcuts = () => {
 
   const getData = async () => {
     try {
+      const token = localStorage.getItem('token');
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/products/subcategories/prodcuts/${subcategory_id}/`
+        `http://127.0.0.1:8000/api/products/subcategories/prodcuts/${subcategory_id}/`,
+        {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        }
       );
       setNews(response.data);
     } catch (error) {
@@ -49,8 +55,13 @@ const Prodcuts = () => {
 
   const handleSearch = async () => {
     try {
+      const token = localStorage.getItem('token');
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/products/search/${subcategory_id}/?q=${searchQuery}`
+        `http://127.0.0.1:8000/api/products/search/${subcategory_id}/?q=${searchQuery}`,{
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        }
       );
       setNews(response.data);
     } catch (error) {

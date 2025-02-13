@@ -22,6 +22,7 @@ import Devices from './devices/Devices';
 import Games from './games/Games';
 import { cartActions, fetchUserCartAsync } from '../../redux/cartSlice'
 import Grid from '@mui/material/Grid';
+import Swal from 'sweetalert2'
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 
@@ -57,15 +58,47 @@ const StyledImg = styled('img')({
 
 const ListPage = ({ setmyMOde }) => {
 
+  const navigate = useNavigate();
   const [news, setNews] = useState([]);
 
   useEffect(() => {
     getData();
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    if (!token) {
+      Swal.fire({
+        title: "You must log in to access this page.",
+        icon: "error",
+        draggable: true,
+        customClass: {
+          container: 'custom-swal-container',
+          popup: 'custom-swal-popup',
+          header: 'custom-swal-header',
+          title: 'custom-swal-title',
+          content: 'custom-swal-content',
+          actions: 'custom-swal-actions',
+          confirmButton: 'custom-swal-confirm-button',
+        }
+      });
+  
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+    }
+  },[navigate])
+
   const getData = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/products/categories/');
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://127.0.0.1:8000/api/products/categories/',{
+        headers: {
+          Authorization: `Token ${token}`
+        }
+
+      });
       setNews(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -79,7 +112,6 @@ const ListPage = ({ setmyMOde }) => {
   const dispatch = useDispatch();
   const [animate, setAnimate] = useState(false);
   const theme = useTheme();
-  const navigate = useNavigate();
   const userId = localStorage.getItem('user_id');
   const navigateTo = (path) => {
     navigate(path, { state: { user_id: userId } });
@@ -114,11 +146,44 @@ const ListPage = ({ setmyMOde }) => {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('user_id');
-    dispatch(cartActions.clearItems());
-    navigate('/login');
-  };
+  const handleLogout = async () => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to log out?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#7b1fa2',
+        cancelButtonColor: '#d33',
+        background:"#30003f",
+        color:"#fff",
+        confirmButtonText: 'Yes, log out!',
+        cancelButtonText: 'Cancel'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                const token = localStorage.getItem('token');
+
+                const response = await axios.post(
+                    'http://127.0.0.1:8000/api/auth/client/logout/',
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        },
+                    }
+                );
+                localStorage.removeItem('token');
+                localStorage.removeItem('user_id');
+                dispatch(cartActions.clearItems());
+
+
+                navigate('/login');
+            } catch (err) {
+                Swal.fire('Error!', err.response?.data?.error || 'An error occurred', 'error');
+            }
+        }
+    });
+};
 
   return (
       <Box>
