@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import GamepadIcon from '@mui/icons-material/Gamepad';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -18,10 +19,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { keyframes } from '@emotion/react';
 import TextDetails from './textd/TextDetails';
-import Devices from './devices/Devices';
-import Games from './games/Games';
 import { cartActions, fetchUserCartAsync } from '../../redux/cartSlice'
 import Grid from '@mui/material/Grid';
+import AstroBot from "../../images/AstroBot.png"
 import Swal from 'sweetalert2'
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
@@ -147,6 +147,7 @@ const ListPage = ({ setmyMOde }) => {
   };
 
   const handleLogout = async () => {
+    handleClose();
     Swal.fire({
         title: 'Are you sure?',
         text: "Do you want to log out?",
@@ -185,6 +186,19 @@ const ListPage = ({ setmyMOde }) => {
     });
 };
 
+const [showBubble, setShowBubble] = useState(false);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setShowBubble(true);
+    setTimeout(() => {
+      setShowBubble(false);
+    }, 2000);
+  }, 3000);
+
+  return () => clearInterval(interval);
+}, [])
+
   return (
       <Box>
         <Box sx={{ flexGrow: 1 }}>
@@ -201,9 +215,52 @@ const ListPage = ({ setmyMOde }) => {
                       fontSize: 40, 
                       animation: animate ? `${jump} 0.5s ease` : 'none',
                 }}/> 
+                <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+
+                <img src={AstroBot} onClick={() => {
+                    navigate('/astrorobot')
+                  }} 
+                  style={{
+                  width:"50px",
+                  cursor:"pointer"
+                }}
+                />
+                {showBubble && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '-2px',         // عدّل حسب موضع الفقاعة المناسب
+                    left: '40px',         // عدّل حسب موضع الفقاعة المناسب
+                    backgroundColor: '#fff',
+                    color: '#0d47a1',
+                    padding: '4px 9px',
+                    borderRadius: '10px',
+                    boxShadow: '0 0 5px rgba(0,0,0,0.2)',
+                    fontSize: '0.9rem',
+                    whiteSpace: 'nowrap', // لمنع كسر النص
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      left: '-6px',           // اجعلها -6 أو -10px حسب حجم السهم
+                      top: '70%',
+                      transform: 'translateY(-50%)',
+                      width: 0,
+                      height: 0,
+                      borderTop: '6px solid transparent',
+                      borderBottom: '6px solid transparent',
+                      borderRight: '6px solid #fff', // اللون الأبيض نفسه لون خلفية الفقاعة
+                    }} />
+                    How can I help you?
+                  </div>
+                )}
+                </Box>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "center", fontSize: "40px" }}>
                   Dashboard    
                 </Typography>
+                <GamepadIcon sx={{marginRight:"3px", cursor:"pointer"}} 
+                  onClick={() => {
+                    navigate('/gamesuggestions')
+                  }}
+                />
                 <Button
                   id="basic-button"
                   aria-controls={open ? 'basic-menu' : undefined}
@@ -264,7 +321,7 @@ const ListPage = ({ setmyMOde }) => {
                     </IconButton>
                   </MenuItem>
                   <MenuItem onClick={handleLogout}>
-                    Logout
+                    Logout <LogoutIcon sx={{marginLeft:"10px"}}/>
                   </MenuItem>
                 </Menu>
                 </Toolbar>
