@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import { Grid, TextField, Button, Typography, useMediaQuery, Box } from '@mui/material';
 import Swal from "sweetalert2"
 import { useNavigate } from 'react-router-dom';
@@ -108,7 +108,7 @@ const VerifyEmail = () => {
             <div className="content-code">
                 <div>
                     <h2>VERIFY EMAIL</h2>
-                    <FlightTakeoffIcon sx={{ width: "80px", height: "80px" }} />
+                    <SportsEsportsIcon sx={{ width: "80px", height: "80px" }} />
                     <p style={{ fontSize: "15px" }}>Enter the code that was sent to your email</p>
                 </div>
                 <div>
@@ -137,14 +137,14 @@ const VerifyEmail = () => {
                     </Grid>
                     <Button
                         variant="contained"
-                        sx={{ marginTop: '20px', backgroundColor: '#7b1fa2', color: '#fff' }}
+                        sx={{ marginTop: '20px', backgroundColor: '#2196f3', color: '#fff' }}
                         onClick={handleSubmit}
                     >
                         Verify Code
                     </Button>
                     <Button
                         variant="outlined"
-                        sx={{ marginTop: '20px', color: '#7b1fa2', borderColor: '#7b1fa2',marginLeft:"10px" }}
+                        sx={{ marginTop: '20px', color: '#2196f3', borderColor: '#2196f3',marginLeft:"10px" }}
                         onClick={handleResendVerification}
                     >
                         Resend Code

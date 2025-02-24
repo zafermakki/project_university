@@ -2,7 +2,7 @@
     position: relative;
     height: 100vh;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 50%, #30003f, #220020);
+    background: radial-gradient(circle at 50% 50%, #00033f, #000422);
 }
   
   
@@ -18,9 +18,9 @@
     margin-top: 0%;
 }
 .custom-swal-popup {
-    background-color: #30003f;
+    background-color: #00033f;
     color: #fff;
 } 
 .custom-swal-popup {
-    box-shadow: 5px 5px 30px 1px #7b1fa2;
+    box-shadow: 5px 5px 30px 1px #000422;
 }

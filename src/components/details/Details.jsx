@@ -4,7 +4,11 @@ import {
   Button,
   Modal,
   Typography,
-  Rating
+  Rating,
+  Card,
+  CardContent,
+  CardActions,
+  CardMedia
 } from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
 import { useDispatch, useSelector } from "react-redux";
@@ -59,7 +63,14 @@ const Details = () => {
 
     const handleRatingSubmit = async () => {
       if (!rating) {
-        Swal.fire("خطأ", "يرجى تحديد التقييم قبل الإرسال", "error");
+        Swal.fire({
+          title: "error",
+          text: "please determine the evaluation before the transmission",
+          icon: "error",
+          background: "#000422",
+          confirmButtonColor: "#2196f3",
+          color:"#fff"
+        });
         setOpen(false);
         return;
       }
@@ -72,10 +83,24 @@ const Details = () => {
           { headers: { Authorization: `Token ${token}` } } // إرسال التوكين إذا كنت تستخدم المصادقة
         );
   
-        Swal.fire("تم!", "تم إرسال التقييم بنجاح", "success");
+        Swal.fire({
+          title: "success!",
+          text: "The evaluation was successfully sent ",
+          icon: "success",
+          background: "#000422",
+          confirmButtonColor: "#2196f3",
+          color:"#fff"
+        });
         setOpen(false);
       } catch (error) {
-        Swal.fire("خطأ", error.response?.data.detail || "حدث خطأ", "error");
+        Swal.fire({
+          title: "error",
+          text: error.response?.data.detail || "error",
+          icon: "error",
+          background: "blue", 
+          confirmButtonColor: "red",
+          color:"#fff"
+        });
         setOpen(false);
       }
     };
@@ -162,65 +187,100 @@ const Details = () => {
     return (
         <>  
             <Box width='100%' padding={5}>
-                <Box>
-                    <Box>
-                        <Box>
-                            <Box width={"50%"} position="relative">
-                                <img
-                                    // src={`http://192.168.1.94:8000${item.image_path}`}
-                                    src={`http://127.0.0.1:8000${item.image_path}`}
-                                    alt="image"
-                                    width="50%"
-                                    height="50%"
-                                    objectFit="cover"
-                                    style={{ marginLeft:"60%",boxShadow: '5px 5px 30px 1px #2196f3', borderRadius:"20px",width:"600px", height:"400px"}}
-                                />
-                            </Box>
-                            <Box textAlign="center" mt={3}>
-                                <Typography color="amber.500" fontSize="16px" fontWeight="bold" margin={2}>{item.name}</Typography>
-                                <Typography color="amber.500" fontSize="16px" fontWeight="bold" margin={2}>{`${item.price} $ `}</Typography>
-                                <Typography color="amber.500" fontSize="16px" fontWeight="bold" margin={2}>{item.description}</Typography>
-                                <Typography color="amber.500" fontSize="16px" fontWeight="bold" margin={2}>({item.average_rating} / 5)<StarIcon sx={{color:"#fff700",marginBottom:"5px"}}/></Typography>
-                                <ReactPlayer url={item.video_url} controls={true} width="390px" height="240px" style={{boxShadow:"5px 5px 30px 1px #2196f3",marginLeft:"37%"}}/>
-                            </Box>
-                            <Box sx={{marginBottom:"60px"}}>
-                                    <Button
-                                             onClick={handleAddToCart}
-                                             sx={{
-                                                 position: "absolute",
-                                                 right: "40.5%",
-                                                 backgroundColor: "#2196f1",
-                                                 color: "#fff",
-                                                 border: "none",
-                                                 marginTop: "30px",
-                                                 borderRadius: "10px",
-                                                 transition: "0.5s",
-                                                 "&:hover": { backgroundColor: "#000", color: "#2196f3", boxShadow: '1px 1px 5px 1px #2196f3' },
-                                                 boxShadow: '1px 1px 15px 1px #2196f3'
-                                                 
-                                             }}
-                                            >
-                                            Add to Cart
-                                    </Button>
-                                    <Button
-                                      onClick={handleOpen}
-                                      sx={{
-                                          position: "absolute",
-                                          right: "50.5%",
-                                          backgroundColor: "#2196f3",
-                                          color: "#000",
-                                          marginTop: "30px",
-                                          borderRadius: "10px",
-                                          boxShadow: '1px 1px 15px 1px #2196f3',
-                                          "&:hover": { backgroundColor: "#fff700", boxShadow: '1px 1px 5px 1px #fff700' },
-                                      }}
-                                    >
-                                      Game evaluation
-                                    </Button>
-                            </Box>
-                        </Box>
+            <Card
+                  sx={{
+                    maxWidth: 900,
+                    margin: 'auto',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                    borderRadius: 2,
+                    mt: 4,
+                  }}
+                >
+                  {/* عرض الصورة */}
+                  <CardMedia
+                    component="img"
+                    image={`http://127.0.0.1:8000${item.image_path}`}
+                    alt={item.name}
+                    sx={{
+                      height: 400,
+                      objectFit: 'fill',
+                      boxShadow: '5px 5px 30px 1px #2196f3',
+                      borderRadius: 2,
+                    }}
+                  />
+
+                  {/* محتوى تفاصيل المنتج */}
+                  <CardContent sx={{ textAlign: 'center' }}>
+                    <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'amber.500', mb: 1 }}>
+                      {item.name}
+                    </Typography>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: 'amber.500', mb: 1 }}>
+                      {`${item.price} $`}
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'amber.500', mb: 1 }}>
+                      Release Date: {item.release_date}
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'amber.500', mb: 1 }}>
+                      {item.games_type}
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'amber.500', mb: 1 }}>
+                      {item.description}
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
+                      <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'amber.500', mr: 0.5 }}>
+                        ({item.average_rating} / 5)
+                      </Typography>
+                      <StarIcon sx={{ color: "#fff700" }} />
                     </Box>
-                </Box>
+                    {item.video_url && (
+                      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <ReactPlayer
+                          url={item.video_url}
+                          controls
+                          width="390px"
+                          height="240px"
+                          style={{
+                            boxShadow: "5px 5px 30px 1px #2196f3",
+                            borderRadius: '10px',
+                          }}
+                        />
+                      </Box>
+                    )}
+                  </CardContent>
+
+                  {/* أزرار التفاعل */}
+                  <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
+                    <Button
+                      onClick={handleAddToCart}
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#2196f1",
+                        color: "#fff",
+                        borderRadius: "10px",
+                        boxShadow: '1px 1px 15px 1px #2196f3',
+                        transition: '0.5s',
+                        "&:hover": { backgroundColor: "#000", color: "#2196f3", boxShadow: '1px 1px 5px 1px #2196f3' },
+                      }}
+                    >
+                      Add to Cart
+                    </Button>
+                    <Button
+                      onClick={handleOpen}
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#2196f3",
+                        color: "#000",
+                        borderRadius: "10px",
+                        boxShadow: '1px 1px 15px 1px #2196f3',
+                        transition: '0.5s',
+                        ml: 2,
+                        "&:hover": { backgroundColor: "#fff700", boxShadow: '1px 1px 5px 1px #fff700' },
+                      }}
+                    >
+                      Game Evaluation
+                    </Button>
+                  </CardActions>
+                </Card>
                 <Modal open={open} onClose={handleClose}>
                   <Box
                     sx={{

@@ -9,12 +9,13 @@ import IconButton from '@mui/material/IconButton';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import GamepadIcon from '@mui/icons-material/Gamepad';
+import AddchartIcon from '@mui/icons-material/Addchart';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { keyframes } from '@emotion/react';
@@ -153,9 +154,9 @@ const ListPage = ({ setmyMOde }) => {
         text: "Do you want to log out?",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#7b1fa2',
+        confirmButtonColor: '#2196f3',
         cancelButtonColor: '#d33',
-        background:"#30003f",
+        background:"#000422",
         color:"#fff",
         confirmButtonText: 'Yes, log out!',
         cancelButtonText: 'Cancel'
@@ -249,14 +250,14 @@ useEffect(() => {
                       borderBottom: '6px solid transparent',
                       borderRight: '6px solid #fff', // اللون الأبيض نفسه لون خلفية الفقاعة
                     }} />
-                    How can I help you?
+                    Hi,I can Help you
                   </div>
                 )}
                 </Box>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "center", fontSize: "40px" }}>
                   Dashboard    
                 </Typography>
-                <GamepadIcon sx={{marginRight:"3px", cursor:"pointer"}} 
+                <AddchartIcon sx={{marginRight:"3px", cursor:"pointer"}} 
                   onClick={() => {
                     navigate('/gamesuggestions')
                   }}
@@ -279,7 +280,6 @@ useEffect(() => {
                     'aria-labelledby': 'basic-button',
                   }}
                 >
-                  <MenuItem onClick={() => navigateTo('/profile')}>Profile</MenuItem>
                   <MenuItem>
                     DarkMode
                     <IconButton 
@@ -319,6 +319,9 @@ useEffect(() => {
                         </Box>
                       )}
                     </IconButton>
+                  </MenuItem>
+                  <MenuItem onClick={() => navigateTo('/purchases')}>
+                    Puschases <ShoppingCartCheckoutIcon sx={{marginLeft:"10px"}} />
                   </MenuItem>
                   <MenuItem onClick={handleLogout}>
                     Logout <LogoutIcon sx={{marginLeft:"10px"}}/>

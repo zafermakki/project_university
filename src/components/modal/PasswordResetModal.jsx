@@ -36,7 +36,7 @@ const PasswordResetModal = ({open, onClose, onVerificationOpen }) => {
                 transform: 'translate(-50%, -50%)',
                 width: 400,
                 bgcolor: 'background.paper',
-                backgroundColor:"#30003f",
+                backgroundColor:"#00033f",
                 boxShadow: 24,
                 p: 4,
               }}
@@ -64,7 +64,7 @@ const PasswordResetModal = ({open, onClose, onVerificationOpen }) => {
             <Button
                     variant="contained"
                     fullWidth
-                    sx={{ mt: 2,backgroundColor:"#7b1fa2",color:"#fff" }}
+                    sx={{ mt: 2,backgroundColor:"#2196f3",color:"#fff" }}
                     onClick={handlePasswordSubmit}
             >
                  Submit

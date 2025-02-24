@@ -2,7 +2,7 @@ import React from 'react'
 
 const TextDetails = () => {
 
-  const name = localStorage.getItem('user_name')
+  const name = localStorage.getItem('username')
 
   return (
     <div style={{textAlign:"center", margin:"10px"}}>

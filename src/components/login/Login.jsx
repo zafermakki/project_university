@@ -32,9 +32,11 @@ const Login = () => {
       });
       console.log(response.data);
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('username', response.data.username);
       setTimeout(() => {
         const storedUserId = localStorage.setItem('user_id', response.data.user_id);
         console.log(storedUserId); // تحقق من القيمة بعد وقت قصير
+        console.log(response.data)
       }, 1000);
       dispatch(cartActions.clearItems())
       navigate('/list');
@@ -88,7 +90,7 @@ const Login = () => {
                 className='btn-login'
                 type='submit'
                 sx={{
-                  backgroundColor: "#7b1fa2",
+                  backgroundColor: "#2196f3",
                   color: "#fff"
                 }}
               >
@@ -105,7 +107,7 @@ const Login = () => {
                 variant='contained'
                 className='btn-create-account1'
                 sx={{
-                  backgroundColor: "#7b1fa2",
+                  backgroundColor: "#2196f3",
                   color: "#fff"
                 }}
                 onClick={() => navigate('/createaccount')}

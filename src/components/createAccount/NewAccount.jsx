@@ -122,7 +122,7 @@ const NewAccount = () => {
             <br />
             <Button
               variant='contained'
-              sx={{ backgroundColor: "#7b1fa2", color: "#fff" }}
+              sx={{ backgroundColor: "#2196f3", color: "#fff" }}
               className='btn-create-account'
               type="submit"
             >

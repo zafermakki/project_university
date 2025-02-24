@@ -5,7 +5,6 @@ import Interface from "./components/interface/Interface";
 import Login from "./components/login/Login"; 
 import ListPage from "./components/list/List";
 import NewAccount from "./components/createAccount/NewAccount"
-import ProfilePage from "./components/profile/Profile";
 import NewGames from "./components/newGames/NewGames";
 import CartPage from "./components/cart/CartPage";
 import CategoriesDevices from "./components/category/CategoriesDevices";
@@ -51,10 +50,6 @@ function App() {
     {
       path: '/list',
       element: <ListPage setmyMOde={setmyMOde}/>
-    },
-    {
-      path: '/profile',
-      element: <ProfilePage/>
     },
     {
       path: '/newgames',
