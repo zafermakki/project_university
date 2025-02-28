@@ -15,6 +15,7 @@ import Products from "./components/products/Prodcuts";
 import VerifyEmail from "./components/verifyEmail/VerifyEmail";
 import GameSuggestions from "./components/gameSuggestions/GameSuggestions"
 import AstroRobot from "./components/astroRobot/AstroRobot";
+import News from "./components/news/News";
 
 function App() {
   const [MyMOde, setmyMOde] = useState(
@@ -86,6 +87,10 @@ function App() {
     {
       path: '/astrorobot',
       element: <AstroRobot/>
+    },
+    {
+      path: '/news',
+      element: <News/>
     }
   ];
 

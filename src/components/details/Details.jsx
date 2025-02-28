@@ -181,9 +181,6 @@ const Details = () => {
       }
     };
     
-    
-    
-
     return (
         <>  
             <Box width='100%' padding={5}>
@@ -215,7 +212,18 @@ const Details = () => {
                       {item.name}
                     </Typography>
                     <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: 'amber.500', mb: 1 }}>
-                      {`${item.price} $`}
+                    {item.discount_percentage > 0 ? (
+                      <>
+                        <span style={{ textDecoration: 'line-through', marginRight: '8px', color: 'red' }}>
+                          {`${item.price} $`}
+                        </span>
+                        <span>
+                          {`${(item.price - ((item.discount_percentage / 100) * item.price)).toFixed(2)} $`}
+                        </span>
+                      </>
+                       ) : (
+                      `${item.price} $`
+                    )}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'amber.500', mb: 1 }}>
                       Release Date: {item.release_date}
@@ -277,7 +285,7 @@ const Details = () => {
                         "&:hover": { backgroundColor: "#fff700", boxShadow: '1px 1px 5px 1px #fff700' },
                       }}
                     >
-                      Game Evaluation
+                       Evaluation
                     </Button>
                   </CardActions>
                 </Card>
@@ -296,7 +304,7 @@ const Details = () => {
                       textAlign: "center"
                     }}
                   >
-                    <Typography variant="h6" mb={2}> evaluate game</Typography>
+                    <Typography variant="h6" mb={2}> evaluate</Typography>
                     <Rating
                       value={rating}
                       precision={0.5}

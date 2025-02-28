@@ -28,6 +28,8 @@ const AstroRobot = () => {
       url = "http://127.0.0.1:8000/api/products/offline_games/";
     } else if (category === "online") {
       url = "http://127.0.0.1:8000/api/products/online_games/";
+    } else if (category === "discounted") {
+      url = "http://127.0.0.1:8000/api/products/discounted/";
     }
 
     try {
@@ -48,9 +50,6 @@ const AstroRobot = () => {
 
   return (
     <Box sx={{ textAlign: "center", padding: 3 }}>
-    <Typography variant="h4" gutterBottom>
-       Rating Products
-    </Typography>
 
     {/* الأزرار لاختيار نوع التقييم */}
     <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 3 }}>
@@ -71,6 +70,9 @@ const AstroRobot = () => {
       </Button>
       <Button variant="contained" color="secondary" onClick={() => fetchProducts("online")}>
         <WifiIcon sx={{marginRight:"4px"}}/> Online Games
+      </Button>
+      <Button variant="contained" color="success" onClick={() => fetchProducts("discounted")}>
+        🏷️ Discounted
       </Button>
     </Box>
 
@@ -100,7 +102,18 @@ const AstroRobot = () => {
                 )}
                 {product.price && (
                   <Typography variant="body1" color="primary">
-                    💰 Price: {product.price} $
+                    💰 Price: {product.discount_percentage > 0 ? (
+                                  <>
+                                    <span style={{ textDecoration: 'line-through', marginRight: '8px', color: 'red' }}>
+                                      {`${product.price} $`}
+                                    </span>
+                                    <span>
+                                      {`${(product.price - ((product.discount_percentage / 100) * product.price)).toFixed(2)} $`}
+                                    </span>
+                                  </>
+                                ) : (
+                                  `${product.price} $`
+                                )}
                   </Typography>
                 )}
                 {product.total_quantity && (

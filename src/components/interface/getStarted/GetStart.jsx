@@ -19,7 +19,7 @@ const GetStart = () => {
             let's go to make an account 
         </p>
             <Button variant='contained'
-                onClick={() => navigate('/newaccount')}
+                onClick={() => navigate('/createaccount')}
             >
                 Create Account
             </Button>

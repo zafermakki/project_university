@@ -46,7 +46,7 @@ const CartPage = () => {
 
   useEffect(() => {
     const total = cartItems.reduce(
-      (acc, item) => acc + item.price * item.quantity,
+      (acc, item) => acc + parseFloat(item.final_price) * item.quantity,
       0
     );
     setTotalAmount(total.toFixed(2));
@@ -305,8 +305,21 @@ const CartPage = () => {
               />
             </div>
             <div p={4}>
-              <p style={{ textAlign: "center" }}>{item.name}</p>
-              <p style={{ textAlign: "center" }}>{item.price} $</p>
+              <p style={{ textAlign: "center" }}>
+                {item.name}
+              </p>
+              <p style={{ textAlign: "center" }}>
+              {parseFloat(item.final_price) < parseFloat(item.price) ? (
+                <>
+                  <span style={{ textDecoration: "line-through", marginRight: "8px", color: "red" }}>
+                    {item.price} $
+                  </span>
+                  <span>{item.final_price} $</span>
+                </>
+                 ) : (
+                  <span>{item.price} $</span>
+              )}
+              </p>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <IconButton onClick={() => decreaseQuantity(item.id)} disabled={item.quantity <= 1}>
                   <RemoveIcon />

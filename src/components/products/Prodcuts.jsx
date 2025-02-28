@@ -121,9 +121,6 @@ const Prodcuts = () => {
         </Typography>
       ))}
     </Box>  
-
-
-
             <Typography
               variant="h6"
               component="div"
@@ -177,7 +174,20 @@ const Prodcuts = () => {
                 <p style={{ textAlign: "center", marginTop: "10px", color: "#2196f3" }}>
                   {item.name}
                 </p>
-                <p style={{ textAlign: "center", color: "#2196f3" }}>{item.price} $ </p>
+                <p style={{ textAlign: "center", color: "#2196f3" }}>
+                {item.discount_percentage > 0 ? (
+                    <>
+                      <span style={{ textDecoration: "line-through", marginRight: "10px", color: "red" }}>
+                        {item.price} $
+                      </span>
+                      <span>
+                        {((item.price) - ((item.discount_percentage / 100) * item.price)).toFixed(2)} $
+                      </span>
+                    </>
+                  ) : (
+                    <span>{item.price} $</span>
+                  )}
+                </p>
               </div>
             </Link>
           </div>

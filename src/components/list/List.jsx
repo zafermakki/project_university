@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
+import { Tooltip } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -16,6 +17,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import logoPs from "../../images/logo_list_page.png"
+import logonews from "../../images/news.png"
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { keyframes } from '@emotion/react';
@@ -205,6 +208,7 @@ useEffect(() => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar sx={{backgroundColor: "#0d47a1", position:"static"}}>
                 <Toolbar>
+                <img src={logoPs} style={{width:"50px",marginRight:"5px"}}/>
                 <SportsEsportsIcon 
                 onClick={() => {
                   navigate('/newgames')
@@ -257,6 +261,13 @@ useEffect(() => {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "center", fontSize: "40px" }}>
                   Dashboard    
                 </Typography>
+                <Tooltip title="News" arrow>
+                  <img src={logonews} style={{width:"50px",cursor:"pointer"}}
+                    onClick={() => {
+                      navigate('/news')
+                    }}
+                  />
+                </Tooltip>
                 <AddchartIcon sx={{marginRight:"3px", cursor:"pointer"}} 
                   onClick={() => {
                     navigate('/gamesuggestions')
