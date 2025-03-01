@@ -83,7 +83,7 @@ const Prodcuts = () => {
         padding: 2,              // حواف داخلية لإضافة مساحة حول المحتوى
       }}
     >
-      {['Home', 'Profile', 'List'].map((text, index) => (
+      {['Home', 'AstroRobot', 'List'].map((text, index) => (
         <Typography
           key={index}
           variant="body1"

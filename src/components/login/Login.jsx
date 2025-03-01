@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
-import { Button,TextField } from '@mui/material';
+import { Button,TextField,IconButton, InputAdornment } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; 
 import LoginIcon from '@mui/icons-material/Login';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '../../redux/cartSlice';
 import PasswordResetModal from '../modal/PasswordResetModal';
 import VerificationModal from '../modal/VerificationModal';
+
 import axios from 'axios';
 import "./login.css"
 
@@ -21,7 +23,14 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [openVerificationModal, setOpenVerificationModal] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  }
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -78,11 +87,25 @@ const Login = () => {
               <br />
               <TextField
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className='input-password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 sx={{ margin: "15px" }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <br />
               <Button 

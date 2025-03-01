@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Box, TextField  } from '@mui/material';
+import { Button, Box, TextField,IconButton, InputAdornment  } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -7,6 +8,15 @@ import "./newacount.css";
 
 const NewAccount = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  }
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  }
 
   const [formData, setFormData] = useState({
     username: '',
@@ -28,13 +38,13 @@ const NewAccount = () => {
     e.preventDefault();
 
     if (!formData.username || !formData.password || !formData.email) {
-      setError('جميع الحقول مطلوبة');
+      setError('All fields are required');
       setSuccess('');
       return;
     }
 
     if (formData.password.length < 8) {
-      setError('يجب ان تكون كلمة المرور 8 محارف او أكثر');
+      setError('The password must be 8 letters the least thing ');
       setSuccess('');
       return;
     }
@@ -104,11 +114,25 @@ const NewAccount = () => {
             <br />
             <TextField
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               value={formData.password}
               onChange={handleChange}
               sx={{ margin: "15px", width: "400px" }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <br />
             <TextField

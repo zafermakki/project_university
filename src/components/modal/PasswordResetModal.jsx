@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
-import { Modal, Box, Typography, TextField, Button} from "@mui/material"
+import { Modal, Box, Typography, TextField, Button,IconButton, InputAdornment} from "@mui/material"
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 
 const PasswordResetModal = ({open, onClose, onVerificationOpen }) => {
@@ -8,6 +9,15 @@ const PasswordResetModal = ({open, onClose, onVerificationOpen }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => {
+        setShowPassword((prev) => !prev);
+    }
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    }
 
     const handlePasswordSubmit = async () => {
         try{
@@ -55,11 +65,25 @@ const PasswordResetModal = ({open, onClose, onVerificationOpen }) => {
             />
             <TextField
                     label="New Password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     fullWidth
                     margin="normal"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                                >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
             />
             <Button
                     variant="contained"
